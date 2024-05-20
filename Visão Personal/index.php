@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="en">
 
@@ -24,7 +26,7 @@
                   <img src="assets/images/halter2.png" width="180" alt="">
                 </a>
                 <p class="text-center"> Seja bem vindo <strong>Personal Trainer</strong> </p>
-                <form>
+                <form action="login_personal.php" method="POST">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email"aria-describedby="emailHelp">
@@ -37,7 +39,7 @@
                     
                     
                   </div>
-                  <a href="home_personal.php" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Entrar</a>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Entrar</button>
                   
                 </form>
               </div>

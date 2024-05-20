@@ -1,3 +1,7 @@
+<?php
+  include('testa_sessao.php');
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -58,7 +62,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="sair.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
