@@ -16,6 +16,7 @@
         session_start();
         $_SESSION['codpersonal'] = $linha['codpersonal'];
         $_SESSION['login']='ok';
+        $_SESSION['nome'] = $linha['nome_personal'];
         header('Location: home_personal.php?login=ok');
     } else {
         header('Location: index.php?login=erro');

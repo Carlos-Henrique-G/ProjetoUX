@@ -131,13 +131,11 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-      <div class="alert alert-primary" role="alert">
-        Seja Bem vindo! <strong><?php echo $_SESSION['nome']; ?></stong>
-</div>
+      
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Início</h5>
-            <p class="mb-0">Na barra lateral ao lado, você pode ver, criar, excluir e editar registro de clientes e exercícios/treinos!</p>
+            
+            <img class=""src="assets/images/agachamento.webp" >
           </div>
         </div>
       </div>
