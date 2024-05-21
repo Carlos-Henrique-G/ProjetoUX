@@ -7,7 +7,7 @@
     
   
 
-    $usuarioconectado = "select codpersonal from tbpersonal where email='$email'and senha_personal='$senha';";
+    $usuarioconectado = "select * from tbpersonal where email='$email'and senha_personal='$senha';";
 
     $consulta = $conexao->query($usuarioconectado);
         

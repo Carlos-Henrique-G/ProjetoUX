@@ -2,7 +2,7 @@
     $hostname = "localhost";
     $user = "root";
     $password = "";
-    $database = "projetoux";
+    $database = "db_ux_academia";
 
     $conexao = new mysqli($hostname,$user,$password,$database);
 
