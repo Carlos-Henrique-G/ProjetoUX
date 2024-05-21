@@ -27,10 +27,14 @@
   <style>
     .lista li {
     display: inline-block;
-    margin: 0 0 0 15px;  
+    margin: 0 0 0 15px;
+    
     }
     .add-usu{
       margin:1%;
+    }
+    .lista UL{
+      float:right;
     }
   </style>
 </head>

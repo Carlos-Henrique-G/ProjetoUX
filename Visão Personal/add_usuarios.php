@@ -195,9 +195,10 @@
                         <textarea class="form-control" id="dicas" name="dicas" rows="4"></textarea>
                       </div>
                       <br>
-                        <button type="submit" class="btn btn-success mr-2">Submit</button>
-                        <button class="btn btn-danger">Cancel</button>
+                        <button type="submit" class="btn btn-success mr-2">confirmar</button>
+                        <a class="btn btn-danger" href="usuarios.php">Cancelar</a>
                     </form>
+                         
             <img class=""src="assets/images/agachamento.webp" >
           </div>
         </div>
