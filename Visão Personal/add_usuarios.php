@@ -134,7 +134,7 @@
       
         <div class="card">
           <div class="card-body">
-          <form class="forms-sample" action="cadastrar_usu.php" method="POST">
+          <form class="forms-sample" action="cadastrar_usu.php" method="POST" enctype="multipart/form-data">
             <h6 class="card-title">cadastrar clientes</h6>
                       <div class="form-group">
                         <label for="exampleInputName1">Nome</label>

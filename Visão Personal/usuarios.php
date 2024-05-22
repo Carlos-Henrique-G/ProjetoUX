@@ -161,7 +161,7 @@
     if($consulta->num_rows > 0) {
         
         while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-        
+        echo '<li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', '(',$linha['ddd'],') ',$linha['numero'],'</li>';
         echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
