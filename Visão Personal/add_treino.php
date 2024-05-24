@@ -24,19 +24,6 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-
-  <style>
-    .lista li {
-    display: inline-block;
-    margin: 0 0 0 15px;
-    
-    }
-    .add-usu{
-      margin:1%;
-    }
-    
-    
-  </style>
 </head>
 
 <body>
@@ -124,7 +111,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -145,50 +132,74 @@
       <!--  Header End -->
       <div class="container-fluid">
       
-          <a href="add_usuarios.php" class="add-usu btn btn-primary">Adicionar treino</a>
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="treino_personal.php ">
-                <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                </div>
-              </div> 
-  </form>
-          <div class="lista">
-           <Ul>
-           <?php
-    include('conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $treinos_pesquisa = "select * from tbtreino where tipo_treino like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($treinos_pesquisa);
-    if($consulta_pesquisa->num_rows > 0) {
-        
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-      echo '<li>',$linha['tipo_treino'],'</li>
-      <li><a href="#" class="btn btn-success">editar</a></li>
-      <li><a href="#" class="btn btn-danger">excluir</a></li><hr><br>';
-      
-  }
-}
-  }else{
-    $treinos = "select * from tbtreino ";
-    $consulta = $conexao->query($treinos);
-    
-        
-    if($consulta->num_rows > 0) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-          echo '<li>',$linha['tipo_treino'],'</li>
-          <li><a href="#" class="btn btn-success">editar</a></li>
-          <li><a href="#" class="btn btn-danger">excluir</a></li><hr><br>';
-    }
-  }}
-   
-?>
-            
+          <form class="forms-sample" action="cadastrar_usu.php" method="POST" enctype="multipart/form-data">
+            <h6 class="card-title">cadastrar clientes</h6>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Nome</label>
+                        <input type="text" class="form-control" id="nome_usu" name="nome_usu" placeholder="Nome">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label  >Foto de perfil</label>
+                        <input class="form-control" type="file" id="foto" name="foto">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label >Telefone</label>
+                        <input type="text" class="form-control"data-mask="(00) 0000-0000" placeholder="(xx) xxxx-xxxx" id="telefone"name="telefone">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleSelectGender">Tipo de treino</label>
+                        <select class="form-control" id="tipo_treino"name="tipo_treino">
+                          <?php
+                           include('conexao_banco.php');
+
+                           $treino = "select distinct tipo_treino from tbtreino";
+                           
+                       
+                           $consulta = $conexao->query($treino);
+                           
+                               
+                           if($consulta->num_rows > 0) {
+                               
+                               while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+                                echo '<option>',$linha['tipo_treino'],'</option>';
+                                
+                               
+                           }
+                         }
+                            
+                          ?>
+                          
+                        </select>
+                        
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Dicas</label>
+                        <textarea class="form-control" id="dicas" name="dicas" rows="4"></textarea>
+                      </div>
+                      <br>
+                        <button type="submit" class="btn btn-success mr-2">confirmar</button>
+                        <a class="btn btn-danger" href="usuarios.php">Cancelar</a>
+                    </form>
+                         
+            <img class=""src="assets/images/agachamento.webp" >
           </div>
         </div>
       </div>
@@ -199,6 +210,11 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+<script>$('#telefone').mask('(00) 0000-0000');</script>
 </body>
 
 </html>

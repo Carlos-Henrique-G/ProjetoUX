@@ -124,7 +124,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -149,7 +149,7 @@
           <div class="card-body">
             <form method="POST"  name="f1" action="usuarios.php ">
                 <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"nome="pesquisa">
+                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
                 </div>
@@ -161,14 +161,14 @@
     include('conexao_banco.php');
    if(isset($_POST['pesquisa'])){
     $pesquisa = $_POST['pesquisa'];
-    $usuarios_pesquisa = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusun where tbusuario.nome_usuario like '%$pesquisa%'";
+    $usuarios_pesquisa = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu where tbusuario.nome_usuario like '%$pesquisa%'";
     $consulta_pesquisa = $conexao->query($usuarios_pesquisa);
     if($consulta_pesquisa->num_rows > 0) {
         
-      while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
       echo '<li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
       echo '<li>', $linha['nome_usuario'],'</li>';
-      echo '<li>', '(',$linha['ddd'],') ',$linha['numero'],'</li>';
+      echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
       echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
       echo'<li><a href="#" class="btn btn-primary">Dica</a></li>
       <li><a href="#" class="btn btn-warning">Treino</a></li>
@@ -187,7 +187,7 @@
         while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
         echo '<li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
-        echo '<li>', '(',$linha['ddd'],') ',$linha['numero'],'</li>';
+        echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
         echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
         echo'<li><a href="#" class="btn btn-primary">Dica</a></li>
         <li><a href="#" class="btn btn-warning">Treino</a></li>

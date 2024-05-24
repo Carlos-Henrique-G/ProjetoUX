@@ -7,7 +7,7 @@
     $tipo_treino = $_POST['tipo_treino'];
     $dica = $_POST['dicas'];
     $foto = $_POST['foto'];
-
+    
     if(isset($_FILES['foto'])){
         $nome_temporario=$_FILES["foto"]["tmp_name"];
         $nome_real=$_FILES["foto"]["name"];
@@ -25,8 +25,8 @@
         $char = $telefone[$i];
         if($char == " ") {
             $array = explode(")",$telefone);
-            $ddd = $array[0];
-            $numero = ')'.$array[1];
+            $ddd = $array[0].')';
+            $numero = $array[1];
         }
     }
   
@@ -38,7 +38,7 @@
         $linha = $select->fetch_array(MYSQLI_ASSOC);
         $codtreino = $linha['codtreino'];
     }
-    $cadastrarusu = "insert into tbusuario values(null,'$codtreino','$nome','$utilizador','$dominio','$senha','$foto','$dica')";
+    $cadastrarusu = "insert into tbusuario values(null,'$codtreino','$nome','$utilizador','$dominio','$senha','$nome_real','$dica')";
     $insert = $conexao->query($cadastrarusu);
 
     
