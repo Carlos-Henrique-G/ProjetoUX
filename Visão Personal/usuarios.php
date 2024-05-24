@@ -142,19 +142,43 @@
           </div>
         </nav>
       </header>
-      <!--  Header End -->
+      <!--  Header End -->  
       <div class="container-fluid">
         <a href="add_usuarios.php" class="add-usu btn btn-primary">Adicionar usuário</a>
         <div class="card">
           <div class="card-body">
+            <form method="POST"  name="f1" action="usuarios.php ">
+                <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"nome="pesquisa">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+                </div>
+              </div> 
+  </form>
           <div class="lista">
            <Ul>
            <?php
     include('conexao_banco.php');
-
+   if(isset($_POST['pesquisa'])){
+    $pesquisa = $_POST['pesquisa'];
+    $usuarios_pesquisa = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusun where tbusuario.nome_usuario like '%$pesquisa%'";
+    $consulta_pesquisa = $conexao->query($usuarios_pesquisa);
+    if($consulta_pesquisa->num_rows > 0) {
+        
+      while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+      echo '<li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
+      echo '<li>', $linha['nome_usuario'],'</li>';
+      echo '<li>', '(',$linha['ddd'],') ',$linha['numero'],'</li>';
+      echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
+      echo'<li><a href="#" class="btn btn-primary">Dica</a></li>
+      <li><a href="#" class="btn btn-warning">Treino</a></li>
+      <li><a href="#" class="btn btn-success">editar</a></li>
+      <li><a href="#" class="btn btn-danger">excluir</a></li><hr><br>';
+      
+  }
+}
+  }else{
     $usuarios = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu";
-    
-
     $consulta = $conexao->query($usuarios);
     
         
@@ -170,7 +194,7 @@
         <li><a href="#" class="btn btn-success">editar</a></li>
         <li><a href="#" class="btn btn-danger">excluir</a></li><hr><br>';
     }
-  }
+  }}
    
 ?>
             
