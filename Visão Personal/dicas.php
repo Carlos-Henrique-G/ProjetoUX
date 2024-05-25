@@ -36,7 +36,7 @@
     .lista UL{
       display:flex;
       align-items:center;
-      justify-content:space-around;
+      justify-content:space-between;
     }.lista UL img{
       width:8rem;
       height:8rem;
@@ -152,64 +152,52 @@
       <!--  Header End -->  
       <div class="container-fluid">
       
-        <a href="add_usuarios.php" class="add-usu btn btn-primary">Adicionar usuário</a>
+       
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="usuarios.php ">
+            <form method="POST"  name="f1" action="dicas.php ">
                 <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
+                    
+                <input type="text" class="form-control" placeholder="Insira uma nova dica aqui!" aria-label="Recipient's username" aria-describedby="basic-addon2" id="nova_dica"name="nova_dica">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+                  <button class="btn btn-outline-secondary" type="submit">Adicionar</button>
                 </div>
               </div> 
   </form>
           <div class="lista">
             
            
-           <?php
-    include('conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $usuarios_pesquisa = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu where tbusuario.nome_usuario like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($usuarios_pesquisa);
-    if($consulta_pesquisa->num_rows > 0) {
-
-      $_SESSION['usu_id'] = [];
-
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-        array_push($_SESSION['usu_id'], $linha['codusu']);
-      echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
-      echo '<li>', $linha['nome_usuario'],'</li>';
-      echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
-      echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-      echo'<li><acclass="btn btn-primary" >Dica</a>
-      <a href="#" class="btn btn-warning">Treino</a>
-      <a href="#" class="btn btn-success">editar</a>
-      <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
-      
-  }
-}
-  }else{
-    $usuarios = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu";
-    $consulta = $conexao->query($usuarios);
-    $_SESSION['usu_id'] = [];
-        
-    if($consulta->num_rows > 0) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-        array_push($_SESSION['usu_id'], $linha['codusu']);
-        echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
-        echo '<li>', $linha['nome_usuario'],'</li>';
-        echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
-        echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-        echo'<li><a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" >Dica</a>
-        <a href="#" class="btn btn-warning">Treino</a>
-        <a href="#" class="btn btn-success">editar</a>
-        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
-    }
-  }}
-   
-?>
+            <?php
+                    include('conexao_banco.php');
+                    
+                    $dicas = "select tbdicas.* , tbusuario.* from tbdicas INNER JOIN tbusuario ON tbdicas.codusu =  tbusuario.codusu where codusu=";
+                    
+                    $dicas_select = $conexao->query($dicas);
+                    
+                    if($dicas_select -> num_rows > 0) {
+                    
+                    while($linha = $dicas_select->fetch_array(MYSQLI_ASSOC) ){
+                        $codusu=$linha['codusu'];
+                    echo '<ul><li>', $linha['dica'],'</li>';
+                    echo'
+                    <li>
+                    <a href="#" class="btn btn-success">editar</a>
+                    <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
+                    
+                }
+                }
+                if(isset($_POST['nova_dica'])){
+                    $nova_dica = $_POST['nova_dica'];
+                    
+                    $sql_dica = 'insert into tbdicas values(null,'.$codusu.','.$nova_dica.')';
+                  
+                    $insert_dica = $conexao->query($sql_dica);
+                    if($insert_dica == true){
+                        header('location:dicas.php?insert=ok');
+                    }
+                    }
+                
+            ?>
             
            
   </div>

@@ -5,7 +5,7 @@
     $senha = $_POST['senha'];
     $telefone = $_POST['telefone'];
     $tipo_treino = $_POST['tipo_treino'];
-    $dica = $_POST['dicas'];
+    
     $foto = $_POST['foto'];
     
     if(isset($_FILES['foto'])){
@@ -38,7 +38,7 @@
         $linha = $select->fetch_array(MYSQLI_ASSOC);
         $codtreino = $linha['codtreino'];
     }
-    $cadastrarusu = "insert into tbusuario values(null,'$codtreino','$nome','$utilizador','$dominio','$senha','$nome_real','$dica')";
+    $cadastrarusu = "insert into tbusuario values(null,'$codtreino','$nome','$utilizador','$dominio','$senha','$nome_real')";
     $insert = $conexao->query($cadastrarusu);
 
     
@@ -51,6 +51,7 @@
         if($select2->num_rows > 0) {
             $linha = $select2->fetch_array(MYSQLI_ASSOC);
             $codusu = $linha['codusu'];
+            $_SESSION['codusu']= $linha['codusu'];
         }
     
         
