@@ -111,13 +111,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">Minha Conta</p>
+                      <p class="mb-0 fs-3"><?php echo $_SESSION['nome']?></p>
                     </a>
                     
                     
@@ -134,72 +134,19 @@
       
         <div class="card">
           <div class="card-body">
-          <form class="forms-sample" action="cadastrar_usu.php" method="POST" enctype="multipart/form-data">
-            <h6 class="card-title">cadastrar clientes</h6>
+          <form class="forms-sample" action="cadastrar_treino.php" method="POST" enctype="multipart/form-data">
+            <h6 class="card-title">Adicionar novo treino</h6>
                       <div class="form-group">
-                        <label for="exampleInputName1">Nome</label>
-                        <input type="text" class="form-control" id="nome_usu" name="nome_usu" placeholder="Nome">
+                        <label for="exampleInputName1">Nome do treino</label>
+                        <input type="text" class="form-control" id="nome_treino" name="nome_treino" placeholder="Nome">
                       </div>
                       <br>
-                      <div class="form-group">
-                        <label for="exampleInputEmail3">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email">
-                      </div>
-                      <br>
-                      <div class="form-group">
-                        <label for="exampleInputPassword4">Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
-                      </div>
-                      <br>
-                      
-                      <div class="form-group">
-                        <label  >Foto de perfil</label>
-                        <input class="form-control" type="file" id="foto" name="foto">
-                      </div>
-                      <br>
-                      
-                      <div class="form-group">
-                        <label >Telefone</label>
-                        <input type="text" class="form-control"data-mask="(00) 0000-0000" placeholder="(xx) xxxx-xxxx" id="telefone"name="telefone">
-                      </div>
-                      <br>
-                      <div class="form-group">
-                        <label for="exampleSelectGender">Tipo de treino</label>
-                        <select class="form-control" id="tipo_treino"name="tipo_treino">
-                          <?php
-                           include('conexao_banco.php');
-
-                           $treino = "select distinct tipo_treino from tbtreino";
-                           
-                       
-                           $consulta = $conexao->query($treino);
-                           
-                               
-                           if($consulta->num_rows > 0) {
-                               
-                               while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-                                echo '<option>',$linha['tipo_treino'],'</option>';
-                                
-                               
-                           }
-                         }
-                            
-                          ?>
-                          
-                        </select>
-                        
-                      </div>
-                      <br>
-                      <div class="form-group">
-                        <label for="exampleTextarea1">Dicas</label>
-                        <textarea class="form-control" id="dicas" name="dicas" rows="4"></textarea>
-                      </div>
-                      <br>
+                      <label for="exampleInputName1">Você poderá listar os exercícios do treino no botão exercícios na página anterior!</label><br><br>
                         <button type="submit" class="btn btn-success mr-2">confirmar</button>
-                        <a class="btn btn-danger" href="usuarios.php">Cancelar</a>
+                        <a class="btn btn-danger" href="treino_personal.php">Cancelar</a>
                     </form>
                          
-            <img class=""src="assets/images/agachamento.webp" >
+            
           </div>
         </div>
       </div>

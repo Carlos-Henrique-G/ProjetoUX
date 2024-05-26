@@ -2,7 +2,7 @@
   include('testa_sessao.php');
   include('conexao_banco.php');
   $codpersonal = $_SESSION['codpersonal'];
-  $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
+  $nomepersonal = "select * from tbpersonal where codpersonal='$codpersonal'";
 
     $consulta_nome = $conexao->query($nomepersonal);
         
@@ -10,6 +10,7 @@
         $linha = $consulta_nome->fetch_array(MYSQLI_ASSOC);
         
         $_SESSION['nome'] = $linha['nome_personal'];
+        
         
     } 
   
@@ -25,6 +26,18 @@
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
   <style>
+    .lista li {
+  flex: 1 0 15%; /* Mantém uma largura máxima de 200px para cada item */
+  min-width: 15%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilos adicionais para as colunas */
+.colu1, .colu2, .colu3, .colu4, .colu5, .colu6 {
+  width: 100%;
+}
+
     .lista li {
     display: inline-block;
     margin: 0 0 0 15px;
@@ -137,7 +150,7 @@
                   <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">Minha Conta</p>
+                      <p class="mb-0 fs-3"><?php echo $_SESSION['nome']?></p>
                     </a>
                     
                     
@@ -177,15 +190,16 @@
       $_SESSION['usu_id'] = [];
 
       while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
+      
         array_push($_SESSION['usu_id'], $linha['codusu']);
-      echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
-      echo '<li>', $linha['nome_usuario'],'</li>';
-      echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
-      echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-      echo'<li><acclass="btn btn-primary" >Dica</a>
-      <a href="#" class="btn btn-warning">Treino</a>
-      <a href="#" class="btn btn-success">editar</a>
-      <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
+        echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
+        echo '<li>', $linha['nome_usuario'],'</li>';
+        echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
+        echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
+        echo'<li><a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" >Dica</a>
+        <a href="#" class="btn btn-warning">Treino</a>
+        <a href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success">editar</a>
+        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
       
   }
 }
@@ -202,10 +216,10 @@
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
         echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-        echo'<li><a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" >Dica</a>
-        <a href="#" class="btn btn-warning">Treino</a>
-        <a href="#" class="btn btn-success">editar</a>
-        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
+        echo'<a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-lamp"></i></a>
+        <a href="#" class="btn btn-warning"><i class="ti ti-sport"></i>o</a>
+        <a href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>
+        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr>';
     }
   }}
    

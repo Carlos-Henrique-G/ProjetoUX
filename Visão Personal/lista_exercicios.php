@@ -1,18 +1,12 @@
 <?php
-  include('testa_sessao.php');
   include('conexao_banco.php');
-  $codpersonal = $_SESSION['codpersonal'];
-  $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
-
-    $consulta_nome = $conexao->query($nomepersonal);
-        
-    if($consulta_nome->num_rows > 0) {
-        $linha = $consulta_nome->fetch_array(MYSQLI_ASSOC);
-        
-        $_SESSION['nome'] = $linha['nome_personal'];
-        
-    } 
   
+        
+  if(isset($_GET['id'])){
+    $_SESSION['id_temp2']=$_GET['id'];
+    } 
+    
+  session_start();
 ?>
 
 <!doctype html>
@@ -26,7 +20,19 @@
   <link rel="stylesheet" href="assets/css/styles.min.css" />
   <style>
     .lista li {
-    display: inline-block;
+  flex: 1 0 15%; /* Mantém uma largura máxima de 200px para cada item */
+  min-width: 15%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilos adicionais para as colunas */
+.colu1, .colu2, .colu3, .colu4, .colu5, .colu6 {
+  width: 100%;
+}
+
+ .lista li {
+    display:inline-block;
     margin: 0 0 0 15px;
     
     }
@@ -36,12 +42,12 @@
     .lista UL{
       display:flex;
       align-items:center;
-      justify-content:space-between;
+      justify-content:space-around;
     }.lista UL img{
       width:8rem;
       height:8rem;
     }
-  </style>
+</style>
 </head>
 
 <body>
@@ -151,55 +157,85 @@
       </header>
       <!--  Header End -->  
       <div class="container-fluid">
-      
-       
+        
+        <a href="add_exercicio.php?id=<?php echo $_SESSION['id_temp2']; ?>" class="add-usu btn btn-primary">Adicionar Exercício</a>
         <div class="card">
           <div class="card-body">
-            <form method="POST"  action="add_dicas.php ">
+            <form method="POST"  name="f1" action="lista_exercicios.php ">
                 <div class="input-group mb-3">
-                    
-                <input type="text" class="form-control" placeholder="Insira uma nova dica aqui!" aria-label="Recipient's username" aria-describedby="basic-addon2" id="dica" name="dica">
+                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit" >Adicionar</button>
+                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
                 </div>
               </div> 
   </form>
           <div class="lista">
             
-           
-            <?php
-                    
+          
 
-                    include('conexao_banco.php');
-                    if(isset($_GET['id'])){
-                    $_SESSION['id_temp']=$_GET['id'];
-                    }
-                    $codusu=$_SESSION['id_temp'];
-                    
-                    $dicas = "select tbdicas.* , tbusuario.* from tbdicas INNER JOIN tbusuario ON tbdicas.codusu =  tbusuario.codusu where tbdicas.codusu=".$codusu."";
-                    
-                    $dicas_select = $conexao->query($dicas);
-                    
-                    if($dicas_select==true) {
-                    
-                    while($linha = $dicas_select->fetch_array(MYSQLI_ASSOC) ){
-                        
-                    echo '<ul><li>', $linha['dica'],'</li>';
-                    echo'
-                    <li>
-                    <a href="excluir_dica.php?dica='.$linha['coddica'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
-                    
-                }
-                }
-              
-                      
-                  
-                    
-                  
-                   
-                    
-                
-            ?>
+
+            <ul class="lista">
+              <li class="colu1"><strong>Foto</strong></li>
+              <li class="colu2"><strong>Exercício</strong></li>
+              <li class="colu3"><strong>Séries</strong></li>
+              <li class="colu4"><strong>repetições</strong></li>
+              <li class="colu5"><strong>intervalo</strong></li>
+              <li class="colu6"><strong>ações</strong></li>
+            </ul>
+           <?php
+
+           
+           
+    include('conexao_banco.php');
+   if(isset($_POST['pesquisa'])){
+    $pesquisa = $_POST['pesquisa'];
+    $exercicio_pesquisa = "select * from tbexercicio where nome_exercicio like '%$pesquisa%'";
+    $consulta_pesquisa = $conexao->query($exercicio_pesquisa);
+
+    
+    if($consulta_pesquisa->num_rows > 0) {
+
+     
+
+      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
+      
+        echo '<Ul class="lista"><li class="colu1"><img src="assets/images/exercicios_fotos/',$linha['foto_exercicio'],'"></li>';
+        echo '<li class="colu2">', $linha['nome_exercicio'],'</li>';
+        echo '<li class="colu3">', $linha['series'],'</li>';
+        echo '<li class="colu4">', $linha['repeticoes'],'</li>';
+        echo '<li class="colu5">', $linha['intervalo'],'</li>';
+        
+        echo'<li class="colu6">
+        <button title="Descrição" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal4"><i class="ti ti-article"></i></button><br>
+        <a title="editar" href="editar_usu.php?id='.$linha['codexercicio'].'" class="btn btn-success"><i class="ti ti-edit"></i></a><br>
+        <a title=excluir "href="excluir_usu.php?id='.$linha['codexercicio'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr><br>';
+      
+  }
+}
+  }else{
+
+    
+    $exercicios = "SELECT tbtreino.*, tbexercicio.* FROM tbexercicio INNER JOIN tbtreino ON tbexercicio.codtreino = tbtreino.codtreino where tbtreino.codtreino = ".$_SESSION['id_temp2']."";
+$consulta = $conexao->query($exercicios);
+    
+        
+    if($consulta==true) {
+        
+        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+        echo '<Ul class="lista"><li class="colu1"><img src="assets/images/exercicios_fotos/',$linha['foto_exercicio'],'"></li>';
+        echo '<li class="colu2">', $linha['nome_exercicio'],'</li>';
+        echo '<li class="colu3">', $linha['series'],'</li>';
+        echo '<li class="colu4">', $linha['repeticoes'],'</li>';
+        echo '<li class="colu5">', $linha['intervalo'],'</li>';
+        
+        echo'<li class="colu6">
+        <button title="Descrição" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal4"><i class="ti ti-article"></i></button><br>
+        <a title="editar" href="editar_usu.php?id='.$linha['codexercicio'].'" class="btn btn-success"><i class="ti ti-edit"></i></a><br>
+        <a title=excluir "href="excluir_usu.php?id='.$linha['codexercicio'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr><br>';
+    }
+  }}
+   
+?>
             
            
   </div>

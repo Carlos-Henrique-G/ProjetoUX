@@ -24,29 +24,9 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-  <style>
-    .lista li {
-    display: inline-block;
-    margin: 0 0 0 15px;
-    
-    }
-    .add-usu{
-      margin:1%;
-    }
-    .lista UL{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }.lista UL img{
-      width:8rem;
-      height:8rem;
-    }
-  </style>
 </head>
 
 <body>
-
-
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -149,60 +129,88 @@
           </div>
         </nav>
       </header>
-      <!--  Header End -->  
+      <!--  Header End -->
       <div class="container-fluid">
       
-       
         <div class="card">
           <div class="card-body">
-            <form method="POST"  action="add_dicas.php ">
-                <div class="input-group mb-3">
-                    
-                <input type="text" class="form-control" placeholder="Insira uma nova dica aqui!" aria-label="Recipient's username" aria-describedby="basic-addon2" id="dica" name="dica">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit" >Adicionar</button>
-                </div>
-              </div> 
-  </form>
-          <div class="lista">
-            
-           
+          <form class="forms-sample" action="update_usu.php" method="POST" enctype="multipart/form-data">
+            <h6 class="card-title">editar cliente</h6>
             <?php
-                    
-
-                    include('conexao_banco.php');
-                    if(isset($_GET['id'])){
-                    $_SESSION['id_temp']=$_GET['id'];
-                    }
-                    $codusu=$_SESSION['id_temp'];
-                    
-                    $dicas = "select tbdicas.* , tbusuario.* from tbdicas INNER JOIN tbusuario ON tbdicas.codusu =  tbusuario.codusu where tbdicas.codusu=".$codusu."";
-                    
-                    $dicas_select = $conexao->query($dicas);
-                    
-                    if($dicas_select==true) {
-                    
-                    while($linha = $dicas_select->fetch_array(MYSQLI_ASSOC) ){
-                        
-                    echo '<ul><li>', $linha['dica'],'</li>';
-                    echo'
-                    <li>
-                    <a href="excluir_dica.php?dica='.$linha['coddica'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
-                    
-                }
-                }
-              
-                      
-                  
-                    
-                  
-                   
-                    
+                include('conexao_banco.php');
+                $_SESSION['id_temp'] = $_GET['id'];
+                $usuarios = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu where tbusuario.codusu=".$_GET['id']."";
+                $consulta = $conexao->query($usuarios);
+                if($consulta->num_rows > 0) {
                 
-            ?>
+                    while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+                    
+               
+            echo'
+                      <div class="form-group">
+                        <label for="exampleInputName1">Nome</label>
+                        <input type="text" class="form-control" id="nome_usu" name="nome_usu" placeholder="Nome" value="'.$linha['nome_usuario'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email" value="'.$linha['utilizador'].$linha['dominio'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Senha</label>
+                        <input type="text" class="form-control" id="senha" name="senha" placeholder="Senha" value="'.$linha['senha_usuario'].'">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label  >Foto de perfil</label>
+                        <input class="form-control" type="file" id="foto" name="foto" value="'.$linha['foto_usuario'].'">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label >Telefone</label>
+                        <input type="text" class="form-control"data-mask="(00) 0000-0000" placeholder="(xx) xxxx-xxxx" id="telefone"name="telefone" value="'.$linha['ddd'].$linha['numero'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleSelectGender">Tipo de treino</label>
+                        <select class="form-control" id="tipo_treino"name="tipo_treino"  value="MODERADO">
+                          
+                           ';
+
+                           $treino = "select distinct tipo_treino from tbtreino";
+                           
+                       
+                           $consulta = $conexao->query($treino);
+                           
+                               
+                           if($consulta->num_rows > 0) {
+                               
+                               while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+                                echo '<option>',$linha['tipo_treino'],'</option>';
+                                
+                               
+                           }
+                         }
+                            echo'
+                          
+                          
+                        </select>
+                        
+                      </div>
+                      <br>
+                      
+                      
+                        <button type="submit" class="btn btn-success mr-2">confirmar</button>
+                        <a class="btn btn-danger" href="usuarios.php">Cancelar</a>
+                    </form>';
+                }
+            }
             
-           
-  </div>
+              ?>           
+                    
           </div>
         </div>
       </div>
@@ -213,6 +221,11 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+<script>$('#telefone').mask('(00) 0000-0000');</script>
 </body>
 
 </html>

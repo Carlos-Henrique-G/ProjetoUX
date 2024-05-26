@@ -12,7 +12,7 @@
         $_SESSION['nome'] = $linha['nome_personal'];
         
     } 
-  
+    
 ?>
 
 <!doctype html>
@@ -24,29 +24,9 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-  <style>
-    .lista li {
-    display: inline-block;
-    margin: 0 0 0 15px;
-    
-    }
-    .add-usu{
-      margin:1%;
-    }
-    .lista UL{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }.lista UL img{
-      width:8rem;
-      height:8rem;
-    }
-  </style>
 </head>
 
 <body>
-
-
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -149,60 +129,56 @@
           </div>
         </nav>
       </header>
-      <!--  Header End -->  
+      <!--  Header End -->
       <div class="container-fluid">
       
-       
         <div class="card">
           <div class="card-body">
-            <form method="POST"  action="add_dicas.php ">
-                <div class="input-group mb-3">
-                    
-                <input type="text" class="form-control" placeholder="Insira uma nova dica aqui!" aria-label="Recipient's username" aria-describedby="basic-addon2" id="dica" name="dica">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit" >Adicionar</button>
-                </div>
-              </div> 
-  </form>
-          <div class="lista">
-            
-           
-            <?php
-                    
-
-                    include('conexao_banco.php');
-                    if(isset($_GET['id'])){
-                    $_SESSION['id_temp']=$_GET['id'];
-                    }
-                    $codusu=$_SESSION['id_temp'];
-                    
-                    $dicas = "select tbdicas.* , tbusuario.* from tbdicas INNER JOIN tbusuario ON tbdicas.codusu =  tbusuario.codusu where tbdicas.codusu=".$codusu."";
-                    
-                    $dicas_select = $conexao->query($dicas);
-                    
-                    if($dicas_select==true) {
-                    
-                    while($linha = $dicas_select->fetch_array(MYSQLI_ASSOC) ){
-                        
-                    echo '<ul><li>', $linha['dica'],'</li>';
-                    echo'
-                    <li>
-                    <a href="excluir_dica.php?dica='.$linha['coddica'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
-                    
-                }
-                }
-              
+          <form class="forms-sample" action="cadastrar_exercicio.php" method="POST" enctype="multipart/form-data">
+            <h6 class="card-title">cadastrar exercícios</h6>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Nome do Exercício</label>
+                        <input type="text" class="form-control" id="nome_exercicio" name="nome_exercicio" placeholder="Nome">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Repetições</label>
+                        <input type="number" class="form-control" id="repeticoes" name="repeticoes"  placeholder="Repetições">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Séries</label>
+                        <input type="number" class="form-control" id="series" name="series"  placeholder="Séries">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Intervalo(segundos)</label>
+                        <input type="number" class="form-control" id="intervalo" name="intervalo"  placeholder="Intervalo">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao"  placeholder="Descrição">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label  >Foto do exercicio</label>
+                        <input class="form-control" type="file" id="foto_exercicio" name="foto_exercicio">
+                      </div>
+                      <br>
                       
-                  
-                    
-                  
-                   
-                    
-                
-            ?>
-            
+                      
+                      
+                      
+                      
+                        <button type="submit" class="btn btn-success mr-2">confirmar</button>
+                       <?php
+                       $_SESSION['id_temp2']= $_GET['id'];
+                       ?>
+                        <a class="btn btn-danger" href="lista_exercicios.php?id=<?php echo $_SESSION['id_temp2']; ?>">Cancelar</a>
+                    </form>
+                         
            
-  </div>
           </div>
         </div>
       </div>
@@ -213,6 +189,11 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+<script>$('#telefone').mask('(00) 0000-0000');</script>
 </body>
 
 </html>
