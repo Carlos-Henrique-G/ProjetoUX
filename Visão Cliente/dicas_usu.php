@@ -24,7 +24,7 @@
   flex: 1 0 15%; /* Mantém uma largura máxima de 200px para cada item */
   min-width: 15%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
   padding: 10px;
-  text-align: center;
+  
 }
 
 /* Estilos adicionais para as colunas */
@@ -42,8 +42,7 @@
     }
     .lista UL{
       display:flex;
-      align-items:center;
-      justify-content:space-around;
+        
     }.lista UL img{
       width:8rem;
       height:8rem;
@@ -86,7 +85,7 @@
             </li>
             
             <li class="sidebar-item">
-              <a class="sidebar-link" href="treinos.php" aria-expanded="false">
+              <a class="sidebar-link" href="treinos_realizados.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
@@ -172,28 +171,22 @@
 
 
             <ul class="lista">
-              <li ><strong>Nome do treino</strong></li>
-              <li ><strong>Data</strong></li>
+              <li ><strong>Dicas</strong></li>
               
               
-            </ul>
+              
+            </ul><hr>
             <?php
 include('../banco/conexao_banco.php');
 
 
-$realizacoes = "SELECT realizacao_treino.* , tbtreino.* from realizacao_treino inner join tbtreino on (tbtreino.codtreino = realizacao_treino.codtreino) where codusu = ".$_SESSION['codusuario']."";
+$dicas = "SELECT * from dica where codusu = ".$_SESSION['codusuario']."";
 
-$consulta = $conexao->query($realizacoes);
+$consulta = $conexao->query($dicas);
 
 if ($consulta) {
 while ($linha = $consulta->fetch_array(MYSQLI_ASSOC)) {
-    $data_nova = explode('-',$linha['data_realizacao'] );
-echo '<ul class="lista">';
-
-echo '<li >' . $linha['tipo_treino'] . '</li>';
-echo '<li >' . $data_nova[2].'/'.$data_nova[1].'/'.$data_nova[0] . '</li>';
-
-echo '</ul>';
+    echo'<ul><li>'.$linha['dica'].'</li></ul><hr>';
 }
 }
 

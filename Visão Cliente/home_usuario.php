@@ -87,7 +87,16 @@
                 <span class="hide-menu">Treinos realizados</span>
               </a>
             </li>
-            
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="dicas_usu.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-article"></i>
+                </span>
+                <span class="hide-menu">Dicas do personal</span>
+              </a>
+            </li>
+
             <li class="sidebar-item">
               <a class="sidebar-link" href="sair.php" aria-expanded="false">
                 <span>
