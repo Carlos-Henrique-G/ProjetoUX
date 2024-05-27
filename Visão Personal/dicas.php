@@ -176,7 +176,7 @@
                     }
                     $codusu=$_SESSION['id_temp'];
                     
-                    $dicas = "select tbdicas.* , tbusuario.* from tbdicas INNER JOIN tbusuario ON tbdicas.codusu =  tbusuario.codusu where tbdicas.codusu=".$codusu."";
+                    $dicas = "select dica.* , tbusuario.* from dica INNER JOIN tbusuario ON dica.codusu =  tbusuario.codusu where dica.codusu=".$codusu."";
                     
                     $dicas_select = $conexao->query($dicas);
                     

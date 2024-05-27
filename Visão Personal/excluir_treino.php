@@ -12,7 +12,7 @@
 $excluirtreino = $conexao->query($sql_deletar_treino);
 
             if($excluirtreino == true) {
-                echo $treinoid;
+                header('location: treino_personal.php?excluir=ok');
             } else {
                 
             }

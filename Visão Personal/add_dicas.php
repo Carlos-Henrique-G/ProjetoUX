@@ -5,7 +5,7 @@ include('../banco/conexao_banco.php');
     $nova_dica = $_POST['dica'];
 
       
-        $dica = "insert into tbdicas values(null,'$codusu','$nova_dica')";
+        $dica = "insert into dica values(null,'$codusu','$nova_dica')";
         $insert_dica = $conexao->query($dica);
         if($insert_dica ==  true){
           header('location: dicas.php');

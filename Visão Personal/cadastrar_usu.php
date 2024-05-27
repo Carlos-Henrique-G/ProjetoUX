@@ -6,7 +6,6 @@
     $telefone = $_POST['telefone'];
     $tipo_treino = $_POST['tipo_treino'];
     
-    $foto = $_POST['foto'];
     
     if(isset($_FILES['foto'])){
         $nome_temporario=$_FILES["foto"]["tmp_name"];

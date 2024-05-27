@@ -6,7 +6,7 @@
     $dica = $_GET['dica'];
 
     
-            $sql_deletar_dica = "delete from tbdicas
+            $sql_deletar_dica = "delete from dica
                               where coddica = $dica;";
            
             $excluirdica = $conexao->query($sql_deletar_dica);
