@@ -195,7 +195,7 @@
         echo '<Ul><li><img src="../usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
-        echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
+        echo '<li>', $linha['utilizador'],$linha['dominio'],'</li>';
         echo'<a title="dicas" href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-bulb"></i></a>
         <a title="ver treino" href="realizacao.php" class="btn btn-warning"><i class="ti ti-barbell"></i></a>
         <a title="editar" href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>
@@ -215,7 +215,7 @@
         echo '<Ul><li><img src="../usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
-        echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
+        echo '<li>', $linha['utilizador'],$linha['dominio'],'</li>';
         echo'<a title="dicas" href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-bulb"></i></a>
         <a title="ver treino" href="realizacao.php?id='.$linha['codusu'].'&nomeid='.$linha['nome_usuario'].'" class="btn btn-warning"><i class="ti ti-barbell"></i></a>
         <a title="editar" href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>

@@ -138,29 +138,29 @@
             <h6 class="card-title">cadastrar clientes</h6>
                       <div class="form-group">
                         <label for="exampleInputName1">Nome</label>
-                        <input type="text" class="form-control" id="nome_usu" name="nome_usu" placeholder="Nome">
+                        <input type="text" class="form-control" id="nome_usu" name="nome_usu" placeholder="Nome" required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email">
+                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputPassword4">Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha"required>
                       </div>
                       <br>
                       
                       <div class="form-group">
                         <label  >Foto de perfil</label>
-                        <input class="form-control" type="file" id="foto" name="foto">
+                        <input class="form-control" type="file" id="foto" name="foto"required>
                       </div>
                       <br>
                       
                       <div class="form-group">
                         <label >Telefone</label>
-                        <input type="text" class="form-control"data-mask="(00) 0000-0000" placeholder="(xx) xxxx-xxxx" id="telefone"name="telefone">
+                        <input type="text" class="form-control"data-mask="(00) 0000-0000" placeholder="(xx) xxxx-xxxx" id="telefone"name="telefone"required>
                       </div>
                       <br>
                       <div class="form-group">

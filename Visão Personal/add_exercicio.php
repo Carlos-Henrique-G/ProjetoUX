@@ -138,32 +138,32 @@
             <h6 class="card-title">cadastrar exercícios</h6>
                       <div class="form-group">
                         <label for="exampleInputName1">Nome do Exercício</label>
-                        <input type="text" class="form-control" id="nome_exercicio" name="nome_exercicio" placeholder="Nome">
+                        <input type="text" class="form-control" id="nome_exercicio" name="nome_exercicio" placeholder="Nome"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Repetições</label>
-                        <input type="number" class="form-control" id="repeticoes" name="repeticoes"  placeholder="Repetições">
+                        <input type="number" class="form-control" id="repeticoes" name="repeticoes"  placeholder="Repetições"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Séries</label>
-                        <input type="number" class="form-control" id="series" name="series"  placeholder="Séries">
+                        <input type="number" class="form-control" id="series" name="series"  placeholder="Séries"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Intervalo(segundos)</label>
-                        <input type="number" class="form-control" id="intervalo" name="intervalo"  placeholder="Intervalo">
+                        <input type="number" class="form-control" id="intervalo" name="intervalo"  placeholder="Intervalo"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label for="exampleInputEmail3">Descrição</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao"  placeholder="Descrição">
+                        <input type="text" class="form-control" id="descricao" name="descricao"  placeholder="Descrição"required>
                       </div>
                       <br>
                       <div class="form-group">
                         <label  >Foto do exercicio</label>
-                        <input class="form-control" type="file" id="foto_exercicio" name="foto_exercicio">
+                        <input class="form-control" type="file" id="foto_exercicio" name="foto_exercicio"required>
                       </div>
                       <br>
                       

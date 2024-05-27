@@ -138,7 +138,7 @@
             <h6 class="card-title">Adicionar novo treino</h6>
                       <div class="form-group">
                         <label for="exampleInputName1">Nome do treino</label>
-                        <input type="text" class="form-control" id="nome_treino" name="nome_treino" placeholder="Nome">
+                        <input type="text" class="form-control" id="nome_treino" name="nome_treino" placeholder="Nome" required>
                       </div>
                       <br>
                       <label for="exampleInputName1">Você poderá listar os exercícios do treino no botão exercícios na página anterior!</label><br><br>
