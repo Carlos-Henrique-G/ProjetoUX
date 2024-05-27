@@ -1,6 +1,6 @@
 <?php
-  include('testa_sessao.php');
-  include('conexao_banco.php');
+  include('../banco/testa_sessao.php');
+  include('../banco/conexao_banco.php');
   $codpersonal = $_SESSION['codpersonal'];
   $nomepersonal = "select * from tbpersonal where codpersonal='$codpersonal'";
 
@@ -68,8 +68,8 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
-            <img src="assets/images/halter2.png" width="180" alt="" />
+          <a href="home_personal.php" class="text-nowrap logo-img">
+            <img src="../logos/halter2.png" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -144,7 +144,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="../logos/user-286.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -180,7 +180,7 @@
             
            
            <?php
-    include('conexao_banco.php');
+    include('../banco/conexao_banco.php');
    if(isset($_POST['pesquisa'])){
     $pesquisa = $_POST['pesquisa'];
     $usuarios_pesquisa = "select tbusuario.* , tbtelefone.* from tbusuario INNER JOIN tbtelefone ON tbtelefone.codusu =  tbusuario.codusu where tbusuario.nome_usuario like '%$pesquisa%'";
@@ -192,14 +192,14 @@
       while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
       
         array_push($_SESSION['usu_id'], $linha['codusu']);
-        echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
+        echo '<Ul><li><img src="../usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
         echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-        echo'<li><a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" >Dica</a>
-        <a href="#" class="btn btn-warning">Treino</a>
-        <a href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success">editar</a>
-        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger">excluir</a></li></Ul><hr>';
+        echo'<a title="dicas" href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-bulb"></i></a>
+        <a title="ver treino" href="realizacao.php" class="btn btn-warning"><i class="ti ti-barbell"></i></a>
+        <a title="editar" href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>
+        <a title="excluir" href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr>';
       
   }
 }
@@ -212,14 +212,14 @@
         
         while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
         array_push($_SESSION['usu_id'], $linha['codusu']);
-        echo '<Ul><li><img src="assets/images/usuarios_fotos/',$linha['foto_usuario'],'"></li>';
+        echo '<Ul><li><img src="../usuarios_fotos/',$linha['foto_usuario'],'"></li>';
         echo '<li>', $linha['nome_usuario'],'</li>';
         echo '<li>', $linha['ddd'],$linha['numero'],'</li>';
         echo '<li>', $linha['utilizador'],'@',$linha['dominio'],'</li>';
-        echo'<a href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-lamp"></i></a>
-        <a href="#" class="btn btn-warning"><i class="ti ti-sport"></i>o</a>
-        <a href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>
-        <a href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr>';
+        echo'<a title="dicas" href="dicas.php?id='.$linha['codusu'].'" class="btn btn-primary" ><i class="ti ti-bulb"></i></a>
+        <a title="ver treino" href="realizacao.php?id='.$linha['codusu'].'&nomeid='.$linha['nome_usuario'].'" class="btn btn-warning"><i class="ti ti-barbell"></i></a>
+        <a title="editar" href="editar_usu.php?id='.$linha['codusu'].'" class="btn btn-success"><i class="ti ti-edit"></i></a>
+        <a title="excluir" href="excluir_usu.php?id='.$linha['codusu'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr>';
     }
   }}
    

@@ -1,5 +1,5 @@
 <?php
-    include('conexao_banco.php');
+    include('../banco/conexao_banco.php');
     session_start();
     $nome_treino = strtoupper($_POST['nome_treino']);
     $codpersonal = $_SESSION['codpersonal'];

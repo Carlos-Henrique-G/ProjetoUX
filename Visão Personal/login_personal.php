@@ -1,5 +1,5 @@
 <?php
-    include('conexao_banco.php');
+    include('../banco/conexao_banco.php');
 
     $email = $_POST['email'];
     $senha = $_POST['senha'];

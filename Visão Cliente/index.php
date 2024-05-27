@@ -25,8 +25,8 @@
                 <a href="index.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="../logos/halter2.png" width="180" alt="">
                 </a>
-                <p class="text-center"> Seja bem vindo a Brasil Fitness<br><strong>Personal Trainer</strong> </p>
-                <form action="login_personal.php" method="POST">
+                <p class="text-center"><strong>Seja bem vindo a Brasil Fitness!</strong>  </p>
+                <form action="login_usuario.php" method="POST">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email"aria-describedby="emailHelp">

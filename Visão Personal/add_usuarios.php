@@ -1,6 +1,6 @@
 <?php
-  include('testa_sessao.php');
-  include('conexao_banco.php');
+  include('../banco/testa_sessao.php');
+  include('../banco/conexao_banco.php');
   $codpersonal = $_SESSION['codpersonal'];
   $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
 
@@ -35,8 +35,8 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
-            <img src="assets/images/halter2.png" width="180" alt="" />
+          <a href="home_personal.php" class="text-nowrap logo-img">
+            <img src="../logos/halter2.png" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -111,7 +111,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="../logos/user-286.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -167,7 +167,7 @@
                         <label for="exampleSelectGender">Tipo de treino</label>
                         <select class="form-control" id="tipo_treino"name="tipo_treino">
                           <?php
-                           include('conexao_banco.php');
+                           include('../banco/conexao_banco.php');
 
                            $treino = "select distinct tipo_treino from tbtreino";
                            

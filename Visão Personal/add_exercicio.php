@@ -1,6 +1,6 @@
 <?php
-  include('testa_sessao.php');
-  include('conexao_banco.php');
+  include('../banco/testa_sessao.php');
+  include('../banco/conexao_banco.php');
   $codpersonal = $_SESSION['codpersonal'];
   $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
 

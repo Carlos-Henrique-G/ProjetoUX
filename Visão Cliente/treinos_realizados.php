@@ -1,18 +1,13 @@
 <?php
-  include('../banco/testa_sessao.php');
   include('../banco/conexao_banco.php');
-  $codpersonal = $_SESSION['codpersonal'];
-  $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
-
-    $consulta_nome = $conexao->query($nomepersonal);
+  
         
-    if($consulta_nome->num_rows > 0) {
-        $linha = $consulta_nome->fetch_array(MYSQLI_ASSOC);
-        
-        $_SESSION['nome'] = $linha['nome_personal'];
-        
-    } 
-   
+ 
+    
+  session_start();
+  if(isset($_GET['id'])){
+    $_SESSION['id_temp2']=$_GET['id'];
+  }
 ?>
 
 <!doctype html>
@@ -24,16 +19,21 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-
   <style>
     .lista li {
-  flex: 1 0 50%; /* Mantém uma largura máxima de 200px para cada item */
-  min-width: 50%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
+  flex: 1 0 15%; /* Mantém uma largura máxima de 200px para cada item */
+  min-width: 15%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
   padding: 10px;
   text-align: center;
 }
-    .lista li {
-    display: inline-block;
+
+/* Estilos adicionais para as colunas */
+.colu1, .colu2, .colu3, .colu4, .colu5, .colu6 {
+  width: 100%;
+}
+
+ .lista li {
+    display:inline-block;
     margin: 0 0 0 15px;
     
     }
@@ -44,12 +44,16 @@
       display:flex;
       align-items:center;
       justify-content:space-around;
+    }.lista UL img{
+      width:8rem;
+      height:8rem;
     }
-    
-  </style>
+</style>
 </head>
 
 <body>
+
+
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -67,13 +71,13 @@
         </div>
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-          <ul id="sidebarnav">
+        <ul id="sidebarnav">
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Menu</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="home_personal.php" aria-expanded="false">
+              <a class="sidebar-link" href="home_usuario.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -86,17 +90,10 @@
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                <span class="hide-menu">Treino</span>
+                <span class="hide-menu">Treinos realizados</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="usuarios.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-plus"></i>
-                </span>
-                <span class="hide-menu">Usuários</span>
-              </a>
-            </li>
+            
             <li class="sidebar-item">
               <a class="sidebar-link" href="sair.php" aria-expanded="false">
                 <span>
@@ -152,58 +149,49 @@
           </div>
         </nav>
       </header>
-      <!--  Header End -->
+      <!--  Header End -->  
       <div class="container-fluid">
-      
-          <a href="add_treino.php" class="add-usu btn btn-primary">Adicionar treino</a>
+        <!-- Modal -->
+       
+<!-- Modal -->
+
+  
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="treino_personal.php ">
-                <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                </div>
-              </div> 
-  </form>
+            
           <div class="lista">
-           <ul>
-            <li><strong>Nome</strong></li>
-            <li><strong>Ações</strong></li>
             
-           </ul>
-           <hr>
-           <?php
-    include('../banco/conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $treinos_pesquisa = "select * from tbtreino where tipo_treino like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($treinos_pesquisa);
-    if($consulta_pesquisa->num_rows > 0) {
-        
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-      echo '<Ul><li>',$linha['tipo_treino'],'</li>
-      <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-      <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-      
-  }
+          
+
+
+            <ul class="lista">
+              <li ><strong>Nome do treino</strong></li>
+              <li ><strong>Data</strong></li>
+              
+              
+            </ul>
+            <?php
+include('../banco/conexao_banco.php');
+
+
+$realizacoes = "SELECT realizacao_treino.* , tbtreino.* from realizacao_treino inner join tbtreino on (tbtreino.codtreino = realizacao_treino.codtreino) where codusu = ".$_SESSION['codusuario']."";
+
+$consulta = $conexao->query($realizacoes);
+
+if ($consulta) {
+while ($linha = $consulta->fetch_array(MYSQLI_ASSOC)) {
+    $data_nova = explode('-',$linha['data_realizacao'] );
+echo '<ul class="lista">';
+
+echo '<li >' . $linha['tipo_treino'] . '</li>';
+echo '<li >' . $data_nova[2].'/'.$data_nova[1].'/'.$data_nova[0] . '</li>';
+
+echo '</ul>';
 }
-  }else{
-    $treinos = "select * from tbtreino ";
-    $consulta = $conexao->query($treinos);
-    
-        
-    if($consulta->num_rows > 0) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-          echo '<ul><li>',$linha['tipo_treino'],'</li>
-          <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-         <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-    }
-  }}
-   
-?>
-            
+}
+
+?>         
+  </div>
           </div>
         </div>
       </div>

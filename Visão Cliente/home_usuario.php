@@ -1,18 +1,10 @@
 <?php
   include('../banco/testa_sessao.php');
   include('../banco/conexao_banco.php');
-  $codpersonal = $_SESSION['codpersonal'];
-  $nomepersonal = "select nome_personal from tbpersonal where codpersonal='$codpersonal'";
+  
 
-    $consulta_nome = $conexao->query($nomepersonal);
-        
-    if($consulta_nome->num_rows > 0) {
-        $linha = $consulta_nome->fetch_array(MYSQLI_ASSOC);
-        
-        $_SESSION['nome'] = $linha['nome_personal'];
-        
-    } 
-   
+
+  
 ?>
 
 <!doctype html>
@@ -24,16 +16,20 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-
   <style>
-    .lista li {
-  flex: 1 0 50%; /* Mantém uma largura máxima de 200px para cada item */
-  min-width: 50%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
+
+.lista li {
+  flex: 1 0 15%; /* Mantém uma largura máxima de 200px para cada item */
+  min-width: 15%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
   padding: 10px;
   text-align: center;
 }
-    .lista li {
-    display: inline-block;
+
+/* Estilos adicionais para as colunas */
+
+
+ .lista li {
+    display:inline-block;
     margin: 0 0 0 15px;
     
     }
@@ -44,9 +40,11 @@
       display:flex;
       align-items:center;
       justify-content:space-around;
+    }.lista UL img{
+      width:8rem;
+      height:8rem;
     }
-    
-  </style>
+    </style>
 </head>
 
 <body>
@@ -73,7 +71,7 @@
               <span class="hide-menu">Menu</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="home_personal.php" aria-expanded="false">
+              <a class="sidebar-link" href="home_usuario.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -82,21 +80,14 @@
             </li>
             
             <li class="sidebar-item">
-              <a class="sidebar-link" href="treino_personal.php" aria-expanded="false">
+              <a class="sidebar-link" href="treinos_realizados.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                <span class="hide-menu">Treino</span>
+                <span class="hide-menu">Treinos realizados</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="usuarios.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-plus"></i>
-                </span>
-                <span class="hide-menu">Usuários</span>
-              </a>
-            </li>
+            
             <li class="sidebar-item">
               <a class="sidebar-link" href="sair.php" aria-expanded="false">
                 <span>
@@ -154,56 +145,39 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-      
-          <a href="add_treino.php" class="add-usu btn btn-primary">Adicionar treino</a>
+      <div class="alert alert-primary" role="alert">
+        Seja Bem vindo! <strong><?php echo $_SESSION['nome']; ?></stong>
+</div>
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="treino_personal.php ">
-                <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                </div>
-              </div> 
-  </form>
-          <div class="lista">
-           <ul>
-            <li><strong>Nome</strong></li>
-            <li><strong>Ações</strong></li>
+            <h5 class="card-title fw-semibold mb-4">Início</h5>
+            <div class="lista">
+              <ul>
+                <li>Nome do treino</li>
+                <li>Treino completo</li>
+                <li>Marcar treino como realizado</li>
+              </ul>
+              <hr>
+            <?php
             
-           </ul>
-           <hr>
-           <?php
-    include('../banco/conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $treinos_pesquisa = "select * from tbtreino where tipo_treino like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($treinos_pesquisa);
-    if($consulta_pesquisa->num_rows > 0) {
-        
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-      echo '<Ul><li>',$linha['tipo_treino'],'</li>
-      <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-      <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-      
-  }
-}
-  }else{
-    $treinos = "select * from tbtreino ";
-    $consulta = $conexao->query($treinos);
-    
-        
-    if($consulta->num_rows > 0) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-          echo '<ul><li>',$linha['tipo_treino'],'</li>
-          <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-         <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-    }
-  }}
-   
-?>
+            include('../banco/conexao_banco.php');
             
+               $treinos = "SELECT tbusuario.*, tbtreino.* FROM tbtreino INNER JOIN tbusuario ON (tbtreino.codtreino = tbusuario.codtreino) WHERE tbusuario.codusu =".$_SESSION['codusuario']."";
+
+               $consulta = $conexao->query($treinos);
+               
+                   
+               if($consulta==true) {
+                   
+                   while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+                     echo '<ul><li>',$linha['tipo_treino'],'</li>
+                     <li><a href="lista_exercicios_usu.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
+                    </li><li><a href="realizar_treino.php?id='.$linha['codtreino'].'" class="btn btn-primary">Realizar</a>
+                    </li></ul><hr><br>';
+               }
+             }
+            ?>
+            </div>
           </div>
         </div>
       </div>

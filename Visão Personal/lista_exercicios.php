@@ -1,12 +1,13 @@
 <?php
-  include('conexao_banco.php');
+  include('../banco/conexao_banco.php');
   
         
-  if(isset($_GET['id'])){
-    $_SESSION['id_temp2']=$_GET['id'];
-    } 
+ 
     
   session_start();
+  if(isset($_GET['id'])){
+    $_SESSION['id_temp2']=$_GET['id'];
+  }
 ?>
 
 <!doctype html>
@@ -61,8 +62,8 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
-            <img src="assets/images/halter2.png" width="180" alt="" />
+          <a href="home_personal.php" class="text-nowrap logo-img">
+            <img src="../logos/halter2.png" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -137,7 +138,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="assets/images/user-286.png" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="../logos/user-286.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -157,18 +158,14 @@
       </header>
       <!--  Header End -->  
       <div class="container-fluid">
-        
+        <!-- Modal -->
+       
+<!-- Modal -->
+
         <a href="add_exercicio.php?id=<?php echo $_SESSION['id_temp2']; ?>" class="add-usu btn btn-primary">Adicionar Exercício</a>
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="lista_exercicios.php ">
-                <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                </div>
-              </div> 
-  </form>
+            
           <div class="lista">
             
           
@@ -182,62 +179,50 @@
               <li class="colu5"><strong>intervalo</strong></li>
               <li class="colu6"><strong>ações</strong></li>
             </ul>
-           <?php
+            <?php
+include('../banco/conexao_banco.php');
 
+
+    $exercicios = "SELECT tbtreino.*, tbexercicio.* FROM tbexercicio INNER JOIN tbtreino ON tbexercicio.codtreino = tbtreino.codtreino WHERE tbtreino.codtreino = " . $_SESSION['id_temp2'];
+    $consulta = $conexao->query($exercicios);
+
+    if ($consulta == true) {
+        while ($linha = $consulta->fetch_array(MYSQLI_ASSOC)) {
+            echo '<ul class="lista">';
+            echo '<li class="colu1"><img src="../exercicios_fotos/' . $linha['foto_exercicio'] . '"></li>';
+            echo '<li class="colu2">' . $linha['nome_exercicio'] . '</li>';
+            echo '<li class="colu3">' . $linha['series'] . '</li>';
+            echo '<li class="colu4">' . $linha['repeticoes'] . '</li>';
+            echo '<li class="colu5">' . $linha['intervalo'] . '</li>';
+
+            $modal_id = 'modaldesc_' . $linha['codexercicio'];
+
+            echo '<li class="colu6">';
+            echo '<button title="descrição" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modal_id . '"><i class="ti ti-article"></i></button><br>';
+            echo '<a title="editar" href="editar_exercicio.php?id=' . $linha['codexercicio'] . '" class="btn btn-success"><i class="ti ti-edit"></i></a><br>';
+            echo '<a title="excluir" href="excluir_exercicio.php?id=' . $linha['codexercicio'] . '" class="btn btn-danger"><i class="ti ti-trash"></i></a>';
+            echo '</li>';
+            echo '</ul><hr><br>';
+
+            echo '<div class="modal fade" id="' . $modal_id . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+            echo '<div class="modal-dialog">';
+            echo '<div class="modal-content">';
+            echo '<div class="modal-header">';
+            echo '<h5 class="modal-title" id="exampleModalLabel">Descrição</h5>';
+            echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+            echo '</div>';
+            echo '<div class="modal-body">' . $linha['descricao'] . '</div>';
+            echo '<div class="modal-footer">';
+            echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
            
-           
-    include('conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $exercicio_pesquisa = "select * from tbexercicio where nome_exercicio like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($exercicio_pesquisa);
-
-    
-    if($consulta_pesquisa->num_rows > 0) {
-
-     
-
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-      
-        echo '<Ul class="lista"><li class="colu1"><img src="assets/images/exercicios_fotos/',$linha['foto_exercicio'],'"></li>';
-        echo '<li class="colu2">', $linha['nome_exercicio'],'</li>';
-        echo '<li class="colu3">', $linha['series'],'</li>';
-        echo '<li class="colu4">', $linha['repeticoes'],'</li>';
-        echo '<li class="colu5">', $linha['intervalo'],'</li>';
-        
-        echo'<li class="colu6">
-        <button title="Descrição" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal4"><i class="ti ti-article"></i></button><br>
-        <a title="editar" href="editar_usu.php?id='.$linha['codexercicio'].'" class="btn btn-success"><i class="ti ti-edit"></i></a><br>
-        <a title=excluir "href="excluir_usu.php?id='.$linha['codexercicio'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr><br>';
-      
-  }
-}
-  }else{
-
-    
-    $exercicios = "SELECT tbtreino.*, tbexercicio.* FROM tbexercicio INNER JOIN tbtreino ON tbexercicio.codtreino = tbtreino.codtreino where tbtreino.codtreino = ".$_SESSION['id_temp2']."";
-$consulta = $conexao->query($exercicios);
-    
-        
-    if($consulta==true) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-        echo '<Ul class="lista"><li class="colu1"><img src="assets/images/exercicios_fotos/',$linha['foto_exercicio'],'"></li>';
-        echo '<li class="colu2">', $linha['nome_exercicio'],'</li>';
-        echo '<li class="colu3">', $linha['series'],'</li>';
-        echo '<li class="colu4">', $linha['repeticoes'],'</li>';
-        echo '<li class="colu5">', $linha['intervalo'],'</li>';
-        
-        echo'<li class="colu6">
-        <button title="Descrição" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal4"><i class="ti ti-article"></i></button><br>
-        <a title="editar" href="editar_usu.php?id='.$linha['codexercicio'].'" class="btn btn-success"><i class="ti ti-edit"></i></a><br>
-        <a title=excluir "href="excluir_usu.php?id='.$linha['codexercicio'].'" class="btn btn-danger"><i class="ti ti-trash"></i></a></li></Ul><hr><br>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
     }
-  }}
-   
-?>
-            
-           
+
+?>         
   </div>
           </div>
         </div>

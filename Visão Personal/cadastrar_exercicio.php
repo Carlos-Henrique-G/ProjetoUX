@@ -1,5 +1,5 @@
 <?php
-    include('conexao_banco.php');
+    include('../banco/conexao_banco.php');
     $nome = $_POST['nome_exercicio'];
     $repeticoes = $_POST['repeticoes'];
     $series = $_POST['series'];
@@ -11,7 +11,7 @@
     if(isset($_FILES['foto_exercicio'])){
         $nome_temporario=$_FILES["foto_exercicio"]["tmp_name"];
         $nome_real=$_FILES["foto_exercicio"]["name"];
-        move_uploaded_file($nome_temporario,"assets/images/exercicios_fotos/".$nome_real);
+        move_uploaded_file($nome_temporario,"../exercicios_fotos/".$nome_real);
     }
      
     

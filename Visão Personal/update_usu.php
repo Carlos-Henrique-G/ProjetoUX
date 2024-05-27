@@ -1,5 +1,5 @@
 <?php
-    include('conexao_banco.php');
+    include('../banco/conexao_banco.php');
     session_start();
     $nome = $_POST['nome_usu'];
     $email = $_POST['email'];
@@ -10,7 +10,7 @@
     if(isset($_FILES['foto'])){
         $nome_temporario=$_FILES["foto"]["tmp_name"];
         $nome_real=$_FILES["foto"]["name"];
-        move_uploaded_file($nome_temporario,"assets/images/usuarios_fotos/".$nome_real);
+        move_uploaded_file($nome_temporario,"../usuarios_fotos/".$nome_real);
     }
      
     for($i = 0;$i < strlen($email); $i++) {

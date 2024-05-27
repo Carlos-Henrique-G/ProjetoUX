@@ -12,7 +12,7 @@
         $_SESSION['nome'] = $linha['nome_personal'];
         
     } 
-   
+  
 ?>
 
 <!doctype html>
@@ -24,29 +24,6 @@
   <title>Brasil Fitness</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
-
-  <style>
-    .lista li {
-  flex: 1 0 50%; /* Mantém uma largura máxima de 200px para cada item */
-  min-width: 50%; /* Largura mínima de 200px para garantir que todos tenham o mesmo tamanho */
-  padding: 10px;
-  text-align: center;
-}
-    .lista li {
-    display: inline-block;
-    margin: 0 0 0 15px;
-    
-    }
-    .add-usu{
-      margin:1%;
-    }
-    .lista UL{
-      display:flex;
-      align-items:center;
-      justify-content:space-around;
-    }
-    
-  </style>
 </head>
 
 <body>
@@ -155,55 +132,67 @@
       <!--  Header End -->
       <div class="container-fluid">
       
-          <a href="add_treino.php" class="add-usu btn btn-primary">Adicionar treino</a>
         <div class="card">
           <div class="card-body">
-            <form method="POST"  name="f1" action="treino_personal.php ">
-                <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Pesquisar usuário pelo nome  " aria-label="Recipient's username" aria-describedby="basic-addon2" id="pesquisa"name="pesquisa">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                </div>
-              </div> 
-  </form>
-          <div class="lista">
-           <ul>
-            <li><strong>Nome</strong></li>
-            <li><strong>Ações</strong></li>
+          
+            <h6 class="card-title">editar cliente</h6>
+            <?php
+                include('../banco/conexao_banco.php');
+                $_SESSION['id_temp2'] = $_GET['id'];
+                $exercicios = "SELECT tbtreino.*, tbexercicio.* FROM tbexercicio INNER JOIN tbtreino ON tbexercicio.codtreino = tbtreino.codtreino WHERE tbexercicio.codexercicio = " . $_SESSION['id_temp2'];
+                $consulta = $conexao->query($exercicios);
+                if($consulta->num_rows > 0) {
+                
+                    while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
+                    
+               
+            echo'<form class="forms-sample" action="update_exercicio.php?id='.$linha['codtreino'].'" method="POST" enctype="multipart/form-data">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Nome</label>
+                        <input type="text" class="form-control" id="nome_ex" name="nome_ex" placeholder="Nome" value="'.$linha['nome_exercicio'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">séries</label>
+                        <input type="text" class="form-control" id="series" name="series"  placeholder="repetições" value="'.$linha['series'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Repetições</label>
+                        <input type="text" class="form-control" id="repeticoes" name="repeticoes" placeholder="repetições" value="'.$linha['repeticoes'].'">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label  >Foto de perfil</label>
+                        <input class="form-control" type="file" id="foto" name="foto"">
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Intervalo</label>
+                        <input type="text" class="form-control" id="intervalo" name="intervalo" placeholder="intervalo" value="'.$linha['intervalo'].'">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label >Descrição</label>
+                        <input type="textarea" cols="50" rows="4" class="form-control" id="descricao" name="descricao" placeholder="intervalo" value="'.$linha['descricao'].'" >
+                      </div>
+                      <br>
+                      </div>
+                        
+                      </div>
+                      <br>
+                      
+                      
+                        <button type="submit" class="btn btn-success mr-2">confirmar</button>
+                        <a class="btn btn-danger" href="lista_exercicios.php?id='.$linha['codtreino'].'">Cancelar</a>
+                    </form>';
+                }
+            }
             
-           </ul>
-           <hr>
-           <?php
-    include('../banco/conexao_banco.php');
-   if(isset($_POST['pesquisa'])){
-    $pesquisa = $_POST['pesquisa'];
-    $treinos_pesquisa = "select * from tbtreino where tipo_treino like '%$pesquisa%'";
-    $consulta_pesquisa = $conexao->query($treinos_pesquisa);
-    if($consulta_pesquisa->num_rows > 0) {
-        
-      while($linha = $consulta_pesquisa->fetch_array(MYSQLI_ASSOC)){
-      echo '<Ul><li>',$linha['tipo_treino'],'</li>
-      <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-      <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-      
-  }
-}
-  }else{
-    $treinos = "select * from tbtreino ";
-    $consulta = $conexao->query($treinos);
-    
-        
-    if($consulta->num_rows > 0) {
-        
-        while($linha = $consulta->fetch_array(MYSQLI_ASSOC)){
-          echo '<ul><li>',$linha['tipo_treino'],'</li>
-          <li><a href="lista_exercicios.php?id='.$linha['codtreino'].'" class="btn btn-success">Exercícios</a>
-         <a href="excluir_treino.php?id='.$linha['codtreino'].'" class="btn btn-danger">Excluir</a></li></ul><hr><br>';
-    }
-  }}
-   
-?>
-            
+              ?>           
+                    
           </div>
         </div>
       </div>
@@ -214,6 +203,11 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+<script>$('#telefone').mask('(00) 0000-0000');</script>
 </body>
 
 </html>
